@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="FReply-Mapper">
+	
+	<select id="selectFReplySeqNextValue" resultType="int" >
+		select freply_seq.nextval
+		from dual		
+	</select>
+	
+	<select id="selectFReplyList" resultType="freply">
+		select *
+		from f_reply
+		where fno=#{f_rno}
+		order by f_rno asc
+	</select>
+	<select id="countFReply" resultType="int">
+		select count(f_rno) 
+		from f_reply
+		where fno=#{f_rno}
+	</select>
+	
+	<update id="insertFReply" >
+		insert into f_reply(f_rno,fno,replytext,id)
+		values(#{f_rno},#{fno},#{replytext},#{id})
+	</update>
+	
+	<update id="updateFReply" parameterType="freply">
+		update f_reply 
+		set 
+		replytext=#{replytext},
+		updatedate=sysdate
+		where f_rno=#{f_rno}		
+	</update>
+	
+	<update id="deleteFReply" parameterType="int">
+		delete from f_reply
+		where f_rno=#{f_rno}		
+	</update>	
+</mapper>

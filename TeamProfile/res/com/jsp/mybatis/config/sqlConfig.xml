@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+  
+<configuration>
+	<properties resource="com/jsp/properties/jdbc.properties" />
+	
+					
+	<typeAliases>
+		<typeAlias type="java.lang.String" alias="str" />
+		<typeAlias type="java.lang.Integer" alias="int" />
+		
+		<typeAlias type="com.jsp.dto.MenuVO" alias="menu" />
+ 		<typeAlias type="com.jsp.dto.MemberVO"  alias="member"/>
+ 		<typeAlias type="com.jsp.dto.PdsVO"  alias="pds"/>
+ 		<typeAlias type="com.jsp.dto.PFileVO"  alias="pfile"/>
+ 		<typeAlias type="com.jsp.dto.QBoardVO" alias="qboard" />
+		<typeAlias type="com.jsp.dto.QReplyVO" alias="qreply" />
+		<typeAlias type="com.jsp.dto.WorkBoardVO"  alias="workBoard"/>	
+		<typeAlias type="com.jsp.dto.WorkFileVO"  alias="workFile"/>	
+		<typeAlias type="com.jsp.dto.WReplyVO"  alias="wReply"/>
+		<typeAlias type="com.jsp.dto.FreeBoardVO"  alias="freeBoard"/>
+		<typeAlias type="com.jsp.dto.FReplyVO"  alias="freply"/>
+		<typeAlias type="com.jsp.dto.NoticeVO" alias="notice"/>
+			
+		
+	</typeAliases>
+	
+	<environments default="development">
+		<environment id="development">
+			<transactionManager type="JDBC" />
+			<dataSource type="POOLED">
+				<property name="driver" value="${jdbc.driverClassName}" />
+				<property name="url" value="${jdbc.url}" />
+				<property name="username" value="${jdbc.username}" />
+				<property name="password" value="${jdbc.password}" />
+				
+				<!-- pool setting -->
+				<property value="2" name="poolMaximumActiveConnections"/>
+				<property value="2" name="poolMaximumIdleConnections"/>
+			</dataSource>
+		</environment>
+	</environments>
+	
+	<mappers>
+ 		<mapper resource="com/jsp/mybatis/mappers/Member-Mapper.xml"/>
+ 		<mapper resource="com/jsp/mybatis/mappers/Pds-Mapper.xml"/>
+ 		<mapper resource="com/jsp/mybatis/mappers/PFile-Mapper.xml"/>
+ 		<mapper resource="com/jsp/mybatis/mappers/Menu-Mapper.xml"/>
+ 		<mapper resource="com/jsp/mybatis/mappers/QBoard-Mapper.xml"/>
+ 		<mapper resource="com/jsp/mybatis/mappers/QReply-Mapper.xml"/>
+		<mapper resource="com/jsp/mybatis/mappers/WorkBoard-Mapper.xml"/>
+		<mapper resource="com/jsp/mybatis/mappers/WorkFile-Mapper.xml"/>
+		<mapper resource="com/jsp/mybatis/mappers/WReply-Mapper.xml"/>
+		<mapper resource="com/jsp/mybatis/mappers/FreeBoard-Mapper.xml"/>
+		<mapper resource="com/jsp/mybatis/mappers/FReply-Mapper.xml"/>
+		<mapper resource="com/jsp/mybatis/mappers/Notice-Mapper.xml"/>
+	</mappers>
+	
+</configuration>
+
+
+
+
+
+
+

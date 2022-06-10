@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="PFile-Mapper">
+	<select id="selectPFilesByPno" resultType="pfile">
+		select * 
+		from p_file 
+		where pno = #{pno}
+	</select>	
+	
+	<select id="selectPFileByAno" resultType="pfile">
+		select *
+		from p_file
+		where p_ano=#{p_ano}
+	</select>
+	
+	<update id="insertPFile">
+		insert into 
+		p_file (p_ano, uploadpath, filename, filetype, pno)
+		values (pfile_seq.nextval, #{uploadpath}, #{filename},#{filetype}, 
+				#{pno} )
+	</update>
+	
+	<update id="deletePFile">
+		delete from p_file where p_ano = #{p_ano}
+	</update>
+	
+	<update id="deleteAllPFile">
+		delete 
+		from p_file 
+		where pno = #{pno}
+	</update>
+</mapper>  
+
+

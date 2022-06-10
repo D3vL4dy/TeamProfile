@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="QReply-Mapper">
+	
+	<select id="selectQReplySeqNextValue" resultType="int" >
+		select qreply_seq.nextval
+		from dual		
+	</select>
+	
+	<select id="selectQReplyList" resultType="qreply">
+		select *
+		from q_reply
+		where qno=#{qno}
+		order by q_rno asc
+	</select>
+	<select id="countQReply" resultType="int">
+		select count(qno) 
+		from q_reply
+		where qno=#{qno}
+	</select>
+	
+	<update id="insertQReply" >
+		insert into q_reply(q_rno,qno,replytext,replyer)
+		values(#{q_Rno},#{qno},#{replytext},#{replyer})
+	</update>
+	
+	<update id="updateQReply" parameterType="qreply">
+		update q_reply 
+		set 
+		replytext=#{replytext},
+		updatedate=sysdate
+		where q_rno=#{q_Rno}		
+	</update>
+	
+	<update id="deleteQReply" parameterType="int">
+		delete from q_reply
+		where q_rno=#{q_Rno}		
+	</update>	
+</mapper>

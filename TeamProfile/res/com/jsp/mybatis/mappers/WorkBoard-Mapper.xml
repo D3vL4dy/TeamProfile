@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="WorkBoard-Mapper">
+	<sql id="endDate">
+		<if test="endDate != null">
+			#{endDate}		
+		</if>
+		<if test="endDate == null">
+			null	
+		</if>
+	</sql>
+	<sql id="search">
+		<if test="searchType == 't'.toString()">
+			and title like '%'||#{keyword}||'%'			
+		</if>
+		<if test="searchType == 'w'.toString()">
+			and writer like '%'||#{keyword}||'%'			
+		</if>
+		<if test="searchType == 'c'.toString()">
+			and content like '%'||#{keyword}||'%'			
+		</if>
+		<if test="searchType == 'tc'.toString()">
+			and (
+			title like '%'||#{keyword}||'%'
+			or
+			content like '%'||#{keyword}||'%'						
+			)			
+		</if>
+		<if test="searchType == 'cw'.toString()">
+			and (
+			writer like '%'||#{keyword}||'%'
+			or
+			content like '%'||#{keyword}||'%'						
+			)			
+		</if>
+		<if test="searchType == 'tcw'.toString()">
+			and (
+			title like '%'||#{keyword}||'%'
+			or
+			writer like '%'||#{keyword}||'%'
+			or
+			content like '%'||#{keyword}||'%'						
+			)			
+		</if>
+	</sql>
+	
+	<select id="selectSearchWorkBoardList" resultType="workBoard">
+		select
+		*
+		from
+		work_Board
+		where wno is not null  			  	
+		<include refid="search" />
+		order by wno desc
+	</select>
+	
+	<select id="selectSearchWorkBoardListCount"  resultType="int">
+		select
+		count(*)
+		from
+		work_Board
+		where wno is not null  			  	
+		<include refid="search" />
+		order by wno desc
+	</select>
+	
+	
+	<select id="selectWorkBoardByPno"  resultType="workBoard">
+		select * 
+		from work_Board 
+		where wno=#{wno}
+	</select>
+	
+	<update id="insertWorkBoard" parameterType="workBoard">
+		insert 
+		into 
+		work_Board(wno,title,writer,content,endDate)
+		values
+		(#{wno},#{title},#{writer},#{content},<include refid="endDate" />)
+	</update>
+	
+	<update id="updateWorkBoard" parameterType="workBoard">
+		update 
+		work_Board
+		set 
+		title=#{title}, content=#{content}, updatedate=sysdate, endDate=<include refid="endDate" /> 
+		where wno=#{wno}
+	</update>
+	
+	<update id="deleteWorkBoard" parameterType="int">
+		delete 
+		from work_Board 
+		where wno=#{wno}
+	</update>
+	
+	<update id="increaseViewCnt" parameterType="int">
+		update 
+		work_Board 
+		set 
+		viewcnt=viewcnt+1 
+		where wno=#{wno}
+	</update>
+	
+	<select id="selectWorkBoardSeqNext" resultType="int">
+		select workBoard_seq.nextval as wno from dual
+	</select>
+</mapper>  
+
+

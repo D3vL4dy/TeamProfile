@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="FreeBoard-Mapper">
+		
+	<sql id="search">
+		<if test="searchType == 't'.toString()">
+			and title like '%'||#{keyword}||'%'			
+		</if>
+		<if test="searchType == 'i'.toString()">
+			and id like '%'||#{keyword}||'%'			
+		</if>
+		<if test="searchType == 'c'.toString()">
+			and content like '%'||#{keyword}||'%'			
+		</if>
+		<if test="searchType == 'tc'.toString()">
+			and (
+			title like '%'||#{keyword}||'%'
+			or
+			content like '%'||#{keyword}||'%'						
+			)			
+		</if>
+		<if test="searchType == 'cw'.toString()">
+			and (
+			id like '%'||#{keyword}||'%'
+			or
+			content like '%'||#{keyword}||'%'						
+			)			
+		</if>
+		<if test="searchType == 'tcw'.toString()">
+			and (
+			title like '%'||#{keyword}||'%'
+			or
+			id like '%'||#{keyword}||'%'
+			or
+			content like '%'||#{keyword}||'%'						
+			)			
+		</if>
+	</sql>
+	<select id="selectSearchFreeBoardList"	resultType="freeBoard">
+		select
+		*
+		from
+		free_board
+		where fno is not null  			  	
+		<include refid="search" />
+		order by regdate desc
+	</select>
+	
+	<select id="selectSearchFreeBoardListCount" resultType="int">
+		select
+		count(*)
+		from
+		free_board
+		where fno is not null  			  	
+		<include refid="search" />
+		order by regdate desc
+	</select>
+	
+	
+	<select id="selectFreeBoardByFno"  resultType="freeBoard">
+		select * 
+		from free_board 
+		where fno=#{fno}
+	</select>
+	
+	<update id="insertFreeBoard" parameterType="freeBoard">
+		insert 
+		into 
+		free_board(fno,title,id,content)
+		values
+		(#{fno},#{title},#{id},#{content})
+	</update>
+	
+	<update id="updateFreeBoard" parameterType="freeBoard">
+		update 
+		free_board 
+		set 
+		title=#{title}, content=#{content}, updatedate=sysdate 
+		where fno=#{fno}
+	</update>
+	
+	<update id="deleteFreeBoard" parameterType="int">
+		delete 
+		from free_board 
+		where fno=#{fno}
+	</update>
+	
+	<update id="increaseViewCnt" parameterType="int">
+		update 
+		free_board id
+		set 
+		viewcnt=viewcnt+1 
+		where fno=#{fno}
+	</update>
+	
+	<select id="selectFreeBoardSeqNext" resultType="int">
+		select Freeboard_seq.nextval as fno from dual
+	</select>
+	
+</mapper>  
+
+

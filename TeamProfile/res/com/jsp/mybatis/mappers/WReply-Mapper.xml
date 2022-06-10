@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="WReply-Mapper">
+	
+	<select id="selectWReplySeqNextValue" resultType="int" >
+		select wreply_seq.nextval
+		from dual		
+	</select>
+	
+	<select id="selectWReplyList" resultType="wReply">
+		select *
+		from w_reply
+		where wno=#{wno}
+		order by w_rno asc
+	</select>
+	<select id="countWReply" resultType="int">
+		select count(wno) 
+		from w_reply
+		where wno=#{wno}
+	</select>
+	
+	<update id="insertWReply" >
+		insert into w_reply(w_rno,wno,replytext,replyer)
+		values(#{w_rno},#{wno},#{replytext},#{replyer})
+	</update>
+	
+	<update id="updateWReply" parameterType="wReply">
+		update w_reply 
+		set 
+		replytext=#{replytext},
+		updatedate=sysdate
+		where w_rno=#{w_rno}		
+	</update>
+	
+	<update id="deleteWReply" parameterType="int">
+		delete from w_reply
+		where w_rno=#{w_rno}		
+	</update>	
+</mapper>

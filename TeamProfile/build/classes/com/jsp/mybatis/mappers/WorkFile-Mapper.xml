@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="WorkFile-Mapper">
+	<select id="selectWorkFilesByWno" resultType="workFile">
+		select * 
+		from work_file 
+		where wno = #{wno}
+	</select>	
+	
+	<select id="selectWorkFileByWAno" resultType="workFile">
+		select *
+		from work_file 
+		where w_ano=#{w_ano}
+	</select>
+	
+	<update id="insertWorkFile">
+		insert into 
+		work_file (w_ano, uploadpath, filename, filetype, wno)
+		values (workfile_seq.nextval, #{uploadPath}, #{fileName}, #{fileType}, #{wno} )
+	</update>
+	
+	<update id="deleteWorkFile">
+		delete from work_file where w_ano = #{w_ano}
+	</update>
+	
+	<update id="deleteAllWorkFile">
+		delete 
+		from work_file 
+		where wno = #{wno}
+	</update>
+</mapper>  
+
+
